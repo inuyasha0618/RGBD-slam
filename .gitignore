@@ -1,3 +1,5 @@
+*.pcd
+
 build/
 
 cmake-build-debug/
