@@ -4,5 +4,6 @@ build/
 
 cmake-build-debug/
 
-CMakeLists.user.txt
+CMakeLists.txt.user
 .idea/
+.kdev4/
