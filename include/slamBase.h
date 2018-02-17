@@ -37,7 +37,7 @@ struct RESULT_OF_PNP
 {
   cv::Mat rvec, tvec;
   // Todo: inliers;
-  cv::Mat inliers;
+  int inlier_nums;
 };
 
 PointCloud::Ptr img2PointCloud(cv::Mat rgb_img, cv::Mat depth_img, CAMERA_INTRINSIC_PARAMS& camera_params);

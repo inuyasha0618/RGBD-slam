@@ -27,6 +27,8 @@ int main(int argc, char** argv) {
     CAMERA_INTRINSIC_PARAMS camera(cx, cy, fx, fy, scale);
     
     RESULT_OF_PNP res = estimateMotion(frame1, frame2, camera);
+    
+    cout << "inlier_nums: " << res.inlier_nums << endl;
 
     return 0;
 }

@@ -44,7 +44,7 @@ void computeKeyPointAndDesp(FRAME& frame)
 
     cv::Mat imgShow_kps;
     cv::drawKeypoints(frame.rgb, frame.kps, imgShow_kps, cv::Scalar::all(-1), cv::DrawMatchesFlags::DEFAULT);
-    cv::imshow("rgb1的特征点", imgShow_kps);
+    cv::imshow(frame.frameName, imgShow_kps);
     // cv::imwrite("./data/features_rgb1.png", imgShow_rgb1);
     cv::waitKey(0);
 
@@ -141,7 +141,7 @@ RESULT_OF_PNP estimateMotion(FRAME& frame1, FRAME& frame2, CAMERA_INTRINSIC_PARA
     RESULT_OF_PNP res;
     res.rvec = rvec;
     res.tvec = tvec;
-    res.inliers = inliers;
+    res.inlier_nums = inliers.rows;
     
     return res;
 }
