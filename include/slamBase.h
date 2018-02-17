@@ -4,13 +4,19 @@
 #include <vector>
 using namespace std;
 
+#include <Eigen/Core>
+#include <Eigen/Geometry>
+
 #include <opencv2/core/core.hpp>
+#include <opencv2/core/eigen.hpp>
 #include <opencv2/highgui/highgui.hpp>
 #include <opencv2/features2d.hpp>
 #include <opencv2/calib3d/calib3d.hpp>
 
 #include <pcl/io/pcd_io.h>
 #include <pcl/point_types.h>
+#include <pcl/common/transforms.h>
+#include <pcl/visualization/cloud_viewer.h>
 
 typedef pcl::PointXYZRGBA Point;
 typedef pcl::PointCloud<Point> PointCloud;
@@ -47,3 +53,7 @@ cv::Point3f point2dTo3d(cv::Point3f& point, CAMERA_INTRINSIC_PARAMS& camera_para
 void computeKeyPointAndDesp(FRAME& frame);
 
 RESULT_OF_PNP estimateMotion(FRAME& frame1, FRAME& frame2, CAMERA_INTRINSIC_PARAMS& camera);
+
+Eigen::Isometry3d getIsometry(cv::Mat& rvec, cv::Mat& tvec);
+
+PointCloud::Ptr jointPointCloud(PointCloud::Ptr original, FRAME& newFrame, Eigen::Isometry3d T, CAMERA_INTRINSIC_PARAMS& camera);

@@ -1,12 +1,8 @@
 #include <iostream>
 #include "slamBase.h"
-#include <opencv2/core/eigen.hpp>
 
-#include <Eigen/Core>
-#include <Eigen/Geometry>
 
-#include <pcl/common/transforms.h>
-#include <pcl/visualization/cloud_viewer.h>
+
 
 using namespace std;
 
@@ -37,25 +33,11 @@ int main(int argc, char** argv) {
     
     cout << "inlier_nums: " << res.inlier_nums << endl;
 
-    // 计算用Eigen表示的旋转矩阵
-    cv::Mat R;
-    cv::Rodrigues(res.rvec, R);
-    Eigen::Matrix3d R_in_Eigen;
-    cv::cv2eigen(R, R_in_Eigen);
-
-    Eigen::Isometry3d T = Eigen::Isometry3d::Identity();
-
-    T.rotate(R_in_Eigen);
-    T(0, 3) = res.tvec.at<double>(0, 0);
-    T(1, 3) = res.tvec.at<double>(1, 0);
-    T(2, 3) = res.tvec.at<double>(2, 0);
+    Eigen::Isometry3d T = getIsometry(res.rvec, res.tvec);
 
     PointCloud::Ptr cloud1 = img2PointCloud(frame1.rgb, frame1.depth, camera);
-    PointCloud::Ptr cloud2 = img2PointCloud(frame2.rgb, frame2.depth, camera);
 
-    PointCloud::Ptr sum (new PointCloud());
-    pcl::transformPointCloud(*cloud1, *sum, T.matrix());
-    *sum += *cloud2;
+    PointCloud::Ptr sum = jointPointCloud(cloud1, frame2, T, camera);
     pcl::io::savePCDFile("data/jointCloud.pcd", *sum);
     cout << "joint complete!" << endl;
 

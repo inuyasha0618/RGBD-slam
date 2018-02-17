@@ -148,3 +148,28 @@ RESULT_OF_PNP estimateMotion(FRAME& frame1, FRAME& frame2, CAMERA_INTRINSIC_PARA
     
     return res;
 }
+
+Eigen::Isometry3d getIsometry(cv::Mat& rvec, cv::Mat& tvec) {
+    cv::Mat cv_rotation;
+    Eigen::Matrix3d eigen_rotation;
+
+    cv::Rodrigues(rvec, cv_rotation);
+    cv::cv2eigen(cv_rotation, eigen_rotation);
+
+    Eigen::Isometry3d T = Eigen::Isometry3d::Identity();
+    T.rotate(eigen_rotation);
+    T(0, 3) = tvec.at<double>(0, 0);
+    T(1, 3) = tvec.at<double>(1, 0);
+    T(2, 3) = tvec.at<double>(2, 0);
+
+    return T;
+}
+
+PointCloud::Ptr jointPointCloud(PointCloud::Ptr original, FRAME& newFrame, Eigen::Isometry3d T, CAMERA_INTRINSIC_PARAMS& camera) {
+    PointCloud::Ptr sumCloud(new PointCloud());
+    PointCloud::Ptr newCloud = img2PointCloud(newFrame.rgb, newFrame.depth, camera);
+    pcl::transformPointCloud(*original, *sumCloud, T.matrix());
+    *sumCloud += *newCloud;
+
+    return sumCloud;
+}
