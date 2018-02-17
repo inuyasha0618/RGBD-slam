@@ -173,3 +173,15 @@ PointCloud::Ptr jointPointCloud(PointCloud::Ptr original, FRAME& newFrame, Eigen
 
     return sumCloud;
 }
+
+CAMERA_INTRINSIC_PARAMS getCamera() {
+    ParameterReader pd;
+    CAMERA_INTRINSIC_PARAMS camera;
+    camera.cx = atof(pd.getData("camera.cx").c_str());
+    camera.cy = atof(pd.getData("camera.cy").c_str());
+    camera.fx = atof(pd.getData("camera.fx").c_str());
+    camera.fy = atof(pd.getData("camera.fy").c_str());
+    camera.scale = atof(pd.getData("camera.scale").c_str());
+
+    return camera;
+}

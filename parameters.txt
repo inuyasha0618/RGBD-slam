@@ -1,0 +1,25 @@
+# camera
+camera.cx=325.5
+camera.cy=253.5
+camera.fx=518.0
+camera.fy=519.0
+camera.scale=1000.0
+
+start_index=1
+end_index=700
+
+#rgb_dir=
+rgb_extension=.png
+#depth_dir=
+depth_extension=.png
+
+# 点云分辨率
+voxel_grid=0.01
+# 是否哦实时可视化
+visualize_pointcloud=yes
+# 最小匹配数量
+min_good_match=10
+#最小内点
+min_inliers=5
+#　最大运动误差
+max_norm=0.3

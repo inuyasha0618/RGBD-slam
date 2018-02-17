@@ -1,9 +1,6 @@
 #include <iostream>
 #include "slamBase.h"
 
-
-
-
 using namespace std;
 
 const double cx = 325.5;
@@ -27,7 +24,7 @@ int main(int argc, char** argv) {
     computeKeyPointAndDesp(frame2);
     
     
-    CAMERA_INTRINSIC_PARAMS camera(cx, cy, fx, fy, scale);
+    CAMERA_INTRINSIC_PARAMS camera = getCamera();
     
     RESULT_OF_PNP res = estimateMotion(frame1, frame2, camera);
     

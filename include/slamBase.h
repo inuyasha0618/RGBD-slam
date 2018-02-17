@@ -2,6 +2,7 @@
 
 #include <fstream>
 #include <vector>
+#include <map>
 using namespace std;
 
 #include <Eigen/Core>
@@ -23,7 +24,6 @@ typedef pcl::PointCloud<Point> PointCloud;
 
 struct CAMERA_INTRINSIC_PARAMS
 {
-    CAMERA_INTRINSIC_PARAMS(double cx, double cy, double fx, double fy, double scale): cx(cx), cy(cy), fx(fx), fy(fy), scale(scale) {}
     double cx, cy, fx, fy, scale;
 };
 
@@ -57,3 +57,49 @@ RESULT_OF_PNP estimateMotion(FRAME& frame1, FRAME& frame2, CAMERA_INTRINSIC_PARA
 Eigen::Isometry3d getIsometry(cv::Mat& rvec, cv::Mat& tvec);
 
 PointCloud::Ptr jointPointCloud(PointCloud::Ptr original, FRAME& newFrame, Eigen::Isometry3d T, CAMERA_INTRINSIC_PARAMS& camera);
+
+class ParameterReader {
+public:
+    ParameterReader(string filename = "./parameters.txt") {
+        ifstream fin(filename.c_str());
+
+        if (!fin) {
+            cerr << "No parameter file" << endl;
+        }
+
+        while (!fin.eof()) {
+            string currLine;
+            getline(fin, currLine);
+
+            if (currLine[0] == '#') {
+                continue;
+            }
+
+            int pos = currLine.find("=");
+            if (pos == -1) continue;
+
+            string key = currLine.substr(0, pos);
+            string value = currLine.substr(pos + 1, currLine.length());
+            data[key] = value;
+
+            if (!fin.good()) {
+                break;
+            }
+        }
+    }
+
+    string getData(string key) {
+        map<string, string>::iterator iter = data.find(key);
+        if (iter == data.end()) {
+            cerr << "Parameter name " << key << " not found!" << endl;
+            return string("NOT_FOUND");
+        }
+        return iter->second;
+    }
+
+
+    map<string, string> data;
+};
+
+
+CAMERA_INTRINSIC_PARAMS getCamera();

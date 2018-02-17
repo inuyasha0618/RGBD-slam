@@ -15,7 +15,7 @@ int main(int argc, char** argv) {
     cv::Mat rgb_image = cv::imread(rgb_path);
     cv::Mat depth_image = cv::imread(depth_path, -1);
 
-    CAMERA_INTRINSIC_PARAMS camera(cx, cy, fx, fy, camera_factor);
+    CAMERA_INTRINSIC_PARAMS camera = getCamera();
 
     PointCloud::Ptr cloud = img2PointCloud(rgb_image, depth_image, camera);
 
