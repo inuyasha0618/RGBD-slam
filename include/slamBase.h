@@ -1,6 +1,7 @@
 # pragma once
 
 #include <fstream>
+#include <sstream>
 #include <vector>
 #include <map>
 using namespace std;
@@ -103,3 +104,5 @@ public:
 
 
 CAMERA_INTRINSIC_PARAMS getCamera();
+
+FRAME readFrame(int index, ParameterReader pd);

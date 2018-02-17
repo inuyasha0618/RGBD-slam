@@ -8,9 +8,9 @@ camera.scale=1000.0
 start_index=1
 end_index=700
 
-#rgb_dir=
+rgb_dir=/home/slam/datasets/nyu/rgb_png/
 rgb_extension=.png
-#depth_dir=
+depth_dir=/home/slam/datasets/nyu/depth_png/
 depth_extension=.png
 
 # 点云分辨率

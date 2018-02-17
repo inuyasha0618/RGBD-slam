@@ -185,3 +185,29 @@ CAMERA_INTRINSIC_PARAMS getCamera() {
 
     return camera;
 }
+
+FRAME readFrame(int index, ParameterReader pd) {
+    FRAME frame;
+    stringstream ss;
+    string rgbDir = pd.getData("rgb_dir");
+    string rgbExt = pd.getData("rgb_extension");
+    string depthDir = pd.getData("depth_dir");
+    string depthExt = pd.getData("depth_extension");
+
+    string filename;
+    ss<<rgbDir<<index<<rgbExt;
+    ss>>filename;
+
+    frame.rgb = cv::imread(filename);
+
+    ss.clear();
+    filename.clear();
+
+    ss<<depthDir<<index<<depthExt;
+    ss>>filename;
+
+    frame.depth = cv::imread(filename, -1);
+
+
+    return frame;
+}
