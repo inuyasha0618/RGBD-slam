@@ -127,6 +127,9 @@ RESULT_OF_PNP estimateMotion(FRAME& frame1, FRAME& frame2, CAMERA_INTRINSIC_PARA
     cout << "R=" << rvec << endl;
     cout << "t=" << tvec << endl;
 
+    cout << "R rows: " << rvec.rows << " R cols: " << rvec.cols << endl;
+    cout << "t rows: " << tvec.rows << " t cols: " << tvec.cols << endl;
+
     for (size_t l = 0; l < inliers.rows; ++l) {
         final_goodmatches.push_back(validGoodMatches[inliers.ptr<int>(l)[0]]);
     }

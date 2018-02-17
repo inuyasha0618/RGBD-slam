@@ -15,3 +15,6 @@ TARGET_LINK_LIBRARIES(slamBase ${OpenCV_LIBS} ${PCL_LIBRARIES})
 
 ADD_EXECUTABLE(detectFeatures detectFeatures.cpp)
 TARGET_LINK_LIBRARIES(detectFeatures ${OpenCV_LIBS} slamBase)
+
+ADD_EXECUTABLE(jointPointCloud jointPointCloud.cpp)
+TARGET_LINK_LIBRARIES(jointPointCloud ${OpenCV_LIBS} ${PCL_LIBRARIES} slamBase)
